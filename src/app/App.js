@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Header } from "../components/Header/Header";
-import { Card } from "../components/Card/Card";
+import { List } from "../components/List/List";
+
+const savedTodosArr = JSON.parse(localStorage.getItem("TodosArray")) ?? [];
 
 function App() {
-  const [todosArray, setTodosArray] = useState([]);
+  const [todosArray, setTodosArray] = useState(savedTodosArr);
   const [inputValue, setInput] = useState("");
 
   const createTodosArray = () => {
@@ -43,11 +45,15 @@ function App() {
 
   console.log(todosArray);
 
+  useEffect(() => {
+    localStorage.setItem("TodosArray", JSON.stringify(todosArray));
+  }, [todosArray]);
+
   return (
     <>
       <Header />
       <main>
-        <Card
+        <List
           setInput={setInput}
           inputValue={inputValue}
           todosArray={todosArray}
